@@ -3,12 +3,16 @@ from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth.models import User, auth
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ObjectDoesNotExist
+
 from .models import profile
 
 # Index View
 @login_required(login_url='signin')
 def index(request):
-    return render(request, 'main/index.html')
+    user_object = User.objects.get(username = request.user.username)
+    user_profile = profile.objects.get(user=user_object)
+    return render(request, 'main/index.html',{'user_profile':user_profile})
 
 # Signup View
 def signup(request):
@@ -70,7 +74,41 @@ def logout(request):
     messages.success(request, 'You have been logged out.')
     return redirect('signin')
 
-def settings(request):
-    user_profile = profile.objects.get(user=request.user)
+#upload
+@login_required(login_url='signin')
+def upload(reqeust):
+    return HttpResponse('<h1>upload</h1>')
 
-    return render(request,'main/setting.html',{'user_profile':user_profile})
+#settings
+def settings(request):
+    # Ensure the user is authenticated
+    if not request.user.is_authenticated:
+        return redirect('signin')
+
+    try:
+        # Get the user's profile
+        user_profile = profile.objects.get(user=request.user)
+    except ObjectDoesNotExist:
+        # Handle the case where the profile does not exist
+        user_profile = profile.objects.create(user=request.user)
+
+    if request.method == "POST":
+        # Get form data
+        bio = request.POST.get('bio', '').strip()
+        location = request.POST.get('location', '').strip()
+        pfp = request.FILES.get('pfp')  # Match the form field name 'pfp'
+
+        # Update profile fields
+        if pfp:
+            user_profile.profile_img = pfp
+        user_profile.bio = bio
+        user_profile.location = location
+
+        # Save the profile
+        user_profile.save()
+
+        # Redirect to the settings page after saving
+        return redirect('settings')
+
+    # Render the settings page with the user's profile data
+    return render(request, 'main/setting.html', {'user_profile': user_profile})
