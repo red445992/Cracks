@@ -1,18 +1,24 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth.models import User, auth
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 
-from .models import profile
+from .models import profile,post,LikePost
 
 # Index View
 @login_required(login_url='signin')
 def index(request):
-    user_object = User.objects.get(username = request.user.username)
-    user_profile = profile.objects.get(user=user_object)
-    return render(request, 'main/index.html',{'user_profile':user_profile})
+    user_object = request.user
+    user_profile = get_object_or_404(profile, user=user_object)
+
+    posts = post.objects.all()
+    return render(request, 'main/index.html', {
+        'user_profile': user_profile,
+        'posts': posts,
+    })
+
 
 # Signup View
 def signup(request):
@@ -77,8 +83,39 @@ def logout(request):
 #upload
 @login_required(login_url='signin')
 def upload(reqeust):
+    if reqeust.method == "POST":
+        user = reqeust.user.username
+        image = reqeust.FILES.get('image_upload')
+        caption = reqeust.POST['caption']
+        new_post = post.objects.create(user=user,image=image,caption=caption)
+        new_post.save()
+        return redirect('index')
     return HttpResponse('<h1>upload</h1>')
 
+@login_required(login_url='signin')
+def like_post(request, post_id):
+    username = request.user.username
+    post_instance = get_object_or_404(post, id=post_id)
+
+    like_filter = LikePost.objects.filter(post_id=post_id, username=username).first()
+
+    if like_filter is None:
+       
+        new_like = LikePost.objects.create(post_id=post_id, username=username)
+        new_like.save()
+
+        
+        post_instance.no_of_likes += 1
+        post_instance.save()
+    else:
+       
+        like_filter.delete()
+
+      
+        post_instance.no_of_likes -= 1
+        post_instance.save()
+
+    return redirect('index')  
 #settings
 def settings(request):
     # Ensure the user is authenticated
