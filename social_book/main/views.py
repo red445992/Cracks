@@ -11,7 +11,7 @@ from .models import profile,post,LikePost
 @login_required(login_url='signin')
 def index(request):
     user_object = request.user
-    user_profile = get_object_or_404(profile, user=user_object)
+    user_profile = profile.objects.get(user=user_object)
 
     posts = post.objects.all()
     return render(request, 'main/index.html', {
@@ -116,8 +116,11 @@ def like_post(request, post_id):
         post_instance.save()
 
     return redirect('index')  
+
+
 #settings
 def settings(request):
+
     # Ensure the user is authenticated
     if not request.user.is_authenticated:
         return redirect('signin')
@@ -149,3 +152,7 @@ def settings(request):
 
     # Render the settings page with the user's profile data
     return render(request, 'main/setting.html', {'user_profile': user_profile})
+
+
+def profiles(request):
+    return render(request,'main/profile.html')
