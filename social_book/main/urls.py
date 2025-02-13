@@ -9,5 +9,6 @@ urlpatterns = [
     path('settings/',settings,name="settings"),
     path('upload/',upload,name="upload"),
     path('like-post/<uuid:post_id>/', like_post, name='like-post'),
-    path('profiles/<str:pk>', profiles, name='profiles')
+    path('profiles/<str:pk>', profiles, name='profiles'),
+    path('follow',follow,name="follow")
 ]

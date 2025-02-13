@@ -5,7 +5,7 @@ from django.contrib.auth.models import User, auth
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 
-from .models import profile,post,LikePost
+from .models import profile,post,LikePost,FollowersCount
 
 # Index View
 @login_required(login_url='signin')
@@ -167,3 +167,20 @@ def profiles(request,pk):
         'user_post_length':user_post_length
     }
     return render(request,'main/profile.html',context)
+
+@login_required(login_url='signin')
+def follow(request):
+    if request.method == "POST":
+        follower = request.POST['follower']
+        user = request.POST['user']
+
+        if FollowersCount.objects.filter(follower=follower,user=user).first():
+            delete_follower = FollowersCount.objects.get(follower=follower,user=user)
+            delete_follower.delete()
+            return redirect('/profiles/'+user)
+        else:
+            new_follower = FollowersCount.objects.create(follower=follower,user=user)
+            new_follower.save()
+            return redirect('/profiles/'+user)
+    else:
+        return redirect('/')
