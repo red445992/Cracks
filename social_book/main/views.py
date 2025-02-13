@@ -154,5 +154,16 @@ def settings(request):
     return render(request, 'main/setting.html', {'user_profile': user_profile})
 
 
-def profiles(request):
-    return render(request,'main/profile.html')
+@login_required(login_url='signin')
+def profiles(request,pk):
+    user_object = User.objects.get(username = pk)
+    user_profile = profile.objects.get(user = user_object)
+    user_post = post.objects.filter(user=pk)
+    user_post_length = len(user_post)
+    context = {
+        'user_object' : user_object,
+        'user_profile' : user_profile,
+        'user_post' :  user_post,
+        'user_post_length':user_post_length
+    }
+    return render(request,'main/profile.html',context)
