@@ -6,17 +6,31 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 
 from .models import profile,post,LikePost,FollowersCount
-
+from itertools import chain
 # Index View
 @login_required(login_url='signin')
 def index(request):
     user_object = request.user
     user_profile = profile.objects.get(user=user_object)
 
+    user_following_list = []
+    feed = []
+
+    user_following = FollowersCount.objects.filter(follower=request.user.username)
+
+    for users in user_following:
+        user_following_list.append(users.user)
+    for usernames in user_following_list:
+        feed_lists = post.objects.filter(user=usernames)
+        feed.append(feed_lists)
+
+    feed_list = list(chain(*feed))
+
+
     posts = post.objects.all()
     return render(request, 'main/index.html', {
         'user_profile': user_profile,
-        'posts': posts,
+        'posts': feed_list,
     })
 
 
@@ -160,16 +174,32 @@ def profiles(request,pk):
     user_profile = profile.objects.get(user = user_object)
     user_post = post.objects.filter(user=pk)
     user_post_length = len(user_post)
+
+    follower = request.user.username
+    user = pk
+    
+    if FollowersCount.objects.filter(follower = follower,user = user).first():
+        button_text = 'Unfollow'
+    else:
+        button_text = 'Follow'
+
+    user_followers = len( FollowersCount.objects.filter(user=pk))
+    user_following = len( FollowersCount.objects.filter(follower=pk))
+
     context = {
         'user_object' : user_object,
         'user_profile' : user_profile,
         'user_post' :  user_post,
-        'user_post_length':user_post_length
+        'user_post_length':user_post_length,
+        'button_text':button_text,
+        'user_followers':user_followers,
+        'user_following':user_following
     }
     return render(request,'main/profile.html',context)
 
 @login_required(login_url='signin')
 def follow(request):
+
     if request.method == "POST":
         follower = request.POST['follower']
         user = request.POST['user']
@@ -184,3 +214,25 @@ def follow(request):
             return redirect('/profiles/'+user)
     else:
         return redirect('/')
+
+@login_required(login_url='signin')
+def search(request):
+    user_object = User.objects.get(username=request.user.username)
+    user_profile = profile.objects.get(user=user_object)
+
+    if request.method == 'POST':
+        username = request.POST['username']
+        username_object = User.objects.filter(username__icontains=username)
+
+
+        username_profile = []
+        username_profile_list = []
+        for users in username_object:
+            username_profile.append(users.id)
+
+        for ids in username_profile:
+            profile_lists = profile.objects.filter(id_user=ids)
+            username_profile_list.append(profile_lists)
+        
+        username_profile_list = list(chain(*username_profile_list))
+    return render(request,'main/search.html',{'user_profile':user_profile,'username_profile_list':username_profile_list,' username': username})

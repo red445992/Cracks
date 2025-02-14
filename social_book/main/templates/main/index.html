@@ -31,7 +31,7 @@ Home
                             </div>
                         </a>
 
-                        <span class="block capitalize font-semibold "> <a href="#">{{post.user}} </a></span>
+                        <span class="block capitalize font-semibold "> <a href="/profiles/{{post.user}}">@{{post.user}} </a></span>
                     </div>
                     <div>
                         <a href="#"> <i
@@ -118,7 +118,7 @@ Home
                             </div>
 
                         </a>
-                        <a href="#" class="flex items-center space-x-2 flex-1 justify-end">
+                        <a href="{{post.image.url}}" class="flex items-center space-x-2 flex-1 justify-end" download>
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                 aria-hidden="true" role="img" width="25" height="25" preserveAspectRatio="xMidYMid meet"
                                 viewBox="0 0 16 16">
@@ -131,56 +131,9 @@ Home
                         </a>
                     </div>
                     <p>
-                        <a href="#"> <strong>{{post.user}}</strong></a>: {{post.caption}}
+                        <a href="/profiles/{{post.user}}"> <strong>{{post.user}}</strong></a>: {{post.caption}}
                     </p>
-                    <!-- <div class="flex items-center space-x-3">
-                        <div class="flex items-center">
-                            <img src="{% static 'assets/images/post/trump.webp' %}" alt=""
-                                class="w-6 h-6 rounded-full border-2 border-white ">
-                            <img src="{% static 'assets/images/post/john.webp' %}" alt=""
-                                class="w-6 h-6 rounded-full border-2 border-white  -ml-2">
-                            <img src="{% static 'assets/images/post/messi.messi.webp' %}" alt=""
-                                class="w-6 h-6 rounded-full border-2 border-white  -ml-2">
-                        </div>
-                        <div class="">
-                            Liked <strong> Trump</strong> and <strong> 209 Others </strong>
-                        </div>
-                    </div> -->
-
-                    <!-- <div class="border-t pt-4 space-y-4 ">
-                        <div class="flex">
-                            <div class="w-10 h-10 rounded-full relative flex-shrink-0">
-                                <img src="{% static 'assets/images/post/trump.webp' %}" alt=""
-                                    class="absolute h-full rounded-full w-full">
-                            </div>
-                            <div
-                                class="text-gray-700 py-2 px-3 rounded-md bg-gray-100 h-full relative lg:ml-5 ml-2 lg:mr-20   ">
-                                <p class="leading-6">Nice Pic! Rajesh <urna class="i uil-heart"></urna> <i
-                                        class="uil-grin-tongue-wink"> </i> </p>
-                                <div class="absolute w-3 h-3 top-3 -left-1 bg-gray-100 transform rotate-45 "></div>
-                            </div>
-                        </div>
-                        <div class="flex">
-                            <div class="w-10 h-10 rounded-full relative flex-shrink-0">
-                                <img src="{% static 'assets/images/post/ronaldo.webp' %}" alt=""
-                                    class="absolute h-full rounded-full w-full">
-                            </div>
-                            <div
-                                class="text-gray-700 py-2 px-3 rounded-md bg-gray-100 h-full relative lg:ml-5 ml-2 lg:mr-20   ">
-                                <p class="leading-6">Rajesh Dai! i love you<i class="uil-grin-tongue-wink-alt"></i>
-                                </p>
-                                <div class="absolute w-3 h-3 top-3 -left-1 bg-gray-100 transform rotate-45 "></div>
-                            </div>
-                        </div>
-                    </div> -->
-
-                    <!-- <div class="bg-gray-100 bg-gray-100 rounded-full rounded-md relative ">
-                        <input type="text" placeholder="post a comment" class="bg-transparent max-h-10 shadow-none">
-                        <div class="absolute bottom-0 flex h-full items-center right-0 right-3 text-xl space-x-2">
-                            <a href="#"> <i class="uil-image"></i></a>
-                            <a href="#"> <i class="uil-video"></i></a>
-                        </div>
-                    </div> -->
+                    
 
                 </div>
 

@@ -39,9 +39,12 @@
 					<span style="color: white; font-size: 27px;"><b>{{user_post_length}} Posts</b></span>
 					{% endif %}
 					
-
-					<span style="color: white; font-size: 27px;"><b>1.7m followers</b></span>
-					<span style="color: white; font-size: 27px;"><b>3.5k following</b></span>
+					{% if user_followers == 0 or user_followers == 1 %}
+					<span style="color: white; font-size: 27px;"><b>{{user_followers}} follower</b></span>
+					{%else%}
+					<span style="color: white; font-size: 27px;"><b>{{user_followers}} followers</b></span>
+					{% endif %}
+					<span style="color: white; font-size: 27px;"><b>{{user_following}} following</b></span>
 
 
 					<input type="hidden" value="{{user.username}}" name="follower">
@@ -50,20 +53,12 @@
 					{% if user_object.username == user.username %}
 					<a href="/settings" data-ripple="">Setting</a>  
 					{%else%}
-					<a data-ripple=""><button type="submit" style="background-color: #ffc0cb; border: #ffc0cb;">Follow</button></a>  
+					<a data-ripple=""><button type="submit" style="background-color: #ffc0cb; border: #ffc0cb;">{{button_text}}</button></a>  
 					{% endif %}
 					
 					
 					</div>
 				</form>
-
-				<!-- <form class="edit-phto">
-					<i class="fa fa-camera-retro"></i>
-					<label class="fileContainer">
-						Upload Cover Photo
-					<input type="file"/>
-					</label>
-				</form> -->
 				<div class="container-fluid">
 					<div class="row merged">
 						<div class="col-lg-2 col-sm-3">
@@ -81,22 +76,6 @@
 									  <h5 style="color: black;white-space: nowrap; width: 110px; font-size: 27px;"><b>@{{user_profile.user.username}}</b><!--<i class="fa fa-check-circle" style="color: #48dbfb;" aria-hidden="true"></i>--></h5>
 									  <!--<span>Group Admin</span>-->
 									</li>
-									<!--<li>
-										<a class="" href="javascript:void(0)" title="" data-ripple="">Go live!</a>
-										<a class="" href="javascript:void(0)" title="" data-ripple="">Music</a>
-										<a class="" href="emporium/index-3.html" title="" data-ripple="">Emporium</a>
-										<a class="" href="fitness/index.html" title="" data-ripple="">Health Inspection</a>
-										<a class="" href="settings/account-setting.html" title="" data-ripple="">Settings</a>
-										<a class="" href="javascript:void(0)" title="" data-ripple="">Upload</a>
-										<a class="" href="time-line.html" title="" data-ripple="">time line</a>
-										<a class="" href="timeline-photos.html" title="" data-ripple="">Photos</a>
-										<a class="" href="timeline-videos.html" title="" data-ripple="">Videos</a>
-										<a class="" href="timeline-friends.html" title="" data-ripple="">Friends</a>
-										<a class="" href="timeline-groups.html" title="" data-ripple="">Groups</a>
-										<a class="" href="about.html" title="" data-ripple="">about</a>
-										<a class="" href="#" title="" data-ripple="">more</a>
-
-									</li>-->
 								</ul>
 							</div>
 						</div>
@@ -123,16 +102,7 @@
 									
 								</aside>
 							</div><!-- sidebar -->
-							
-
-
-
-
-
-
-
-
-
+						
 							<div class="col-lg-6">
 								<div class="central-meta">
 									<ul class="photos">
