@@ -149,72 +149,28 @@ Home
 
                 <div class="bg-gray-50  border-b border-gray-100 flex items-baseline justify-between py-4 px-6 ">
                     <h2 class="font-semibold text-lg">Users You Can Follow</h2>
-                    <a href="#"> Refresh</a>
+                    <!-- <a href="#"> Refresh</a> -->
                 </div>
 
                 <div class="divide-gray-300 divide-gray-50 divide-opacity-50 divide-y px-4 ">
+                    {% for suggestion in suggestions_username_profile_list  %}
                     <div class="flex items-center justify-between py-3">
                         <div class="flex flex-1 items-center space-x-4">
-                            <a href="profile.html">
-                                <img src="{% static 'assets/images/post/trump.webp' %}"
+                            <a href="/profiles/suggestion.user">
+                                <img src="{{suggestion.profile_img.url}}"
                                     class="bg-gray-200 rounded-full w-10 h-10">
                             </a>
                             <div class="flex flex-col">
-                                <span class="block capitalize font-semibold"> Donald Trump </span>
-                                <span class="block capitalize text-sm"> 320k followers </span>
+                                <span class="block capitalize font-semibold"> {{suggestion.user}}</span>
+                                <span class="block capitalize text-sm"> {{suggestion.bio}} </span>
                             </div>
                         </div>
 
-                        <a href="#"
+                        <a href="/profiles/{{suggestion.user}}"
                             class="border border-gray-200 font-semibold px-4 py-1 rounded-full hover:bg-pink-600 hover:text-white hover:border-pink-600 ">
-                            Follow </a>
+                            View User </a>
                     </div>
-                    <div class="flex items-center justify-between py-3">
-                        <div class="flex flex-1 items-center space-x-4">
-                            <a href="profile.html">
-                                <img src="{% static 'assets/images/post/ronaldo.webp' %}"
-                                    class="bg-gray-200 rounded-full w-10 h-10">
-                            </a>
-                            <div class="flex flex-col">
-                                <span class="block capitalize font-semibold"> Cristiano Ronaldo </span>
-                                <span class="block capitalize text-sm"> 600M followers </span>
-                            </div>
-                        </div>
-                        <a href="#"
-                            class="border border-gray-200 font-semibold px-4 py-1 rounded-full hover:bg-pink-600 hover:text-white hover:border-pink-600 ">
-                            Follow </a>
-                    </div>
-                    <div class="flex items-center justify-between py-3">
-                        <div class="flex flex-1 items-center space-x-4">
-                            <a href="profile.html">
-                                <img src="{% static 'assets/images/post/messi.webp' %}"
-                                    class="bg-gray-200 rounded-full w-10 h-10">
-                            </a>
-                            <div class="flex flex-col">
-                                <span class="block capitalize font-semibold"> Messi </span>
-                                <span class="block capitalize text-sm"> 20.7k followers </span>
-                            </div>
-                        </div>
-                        <a href="#"
-                            class="border border-gray-200 font-semibold px-4 py-1 rounded-full hover:bg-pink-600 hover:text-white hover:border-pink-600 ">
-                            Follow </a>
-                    </div>
-                    <div class="flex items-center justify-between py-3">
-                        <div class="flex flex-1 items-center space-x-4">
-                            <a href="profile.html">
-                                <img src="{% static 'assets/images/post/john.webp' %}"
-                                    class="bg-gray-200 rounded-full w-10 h-10">
-                            </a>
-                            <div class="flex flex-col">
-                                <span class="block capitalize font-semibold"> John Cena </span>
-                                <span class="block capitalize text-sm"> 100.5k followers </span>
-                            </div>
-                        </div>
-
-                        <a href="#"
-                            class="border border-gray-200 font-semibold px-4 py-1 rounded-full hover:bg-pink-600 hover:text-white hover:border-pink-600 ">
-                            Follow </a>
-                    </div>
+                    {% endfor %}
 
                 </div>
 
