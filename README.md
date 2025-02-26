@@ -41,7 +41,7 @@ Follow these steps to get the project up and running locally:
 Start by cloning the repository to your local machine using the following command:
 
 ```bash
-git clone https://github.com/your-username/social-media-app.git
+git clone https://github.com/red445992/Cracks.git
 ```
 
 ### 2. Create a Virtual Environment (Optional but Recommended)
