@@ -30,7 +30,7 @@ social_book/
 ├── db.sqlite3
 ├── requirements.txt       # Project dependencies
 └── README.md              # Project description
-
+```
 
 ## Setup Instructions
 
@@ -42,30 +42,31 @@ Start by cloning the repository to your local machine using the following comman
 
 ```bash
 git clone https://github.com/your-username/social-media-app.git
-
+```
 
 ### 2. Create a Virtual Environment (Optional but Recommended)
 ```bash
 python -m venv venv
-
+```
 * And activate the env
 ```bash
 .\venv\Scripts\activate
 
-
+```
 
 ### 3. install dependencies
 ```bash
 pip install -r requirements.txt
-
+```
 ### 4. apply database migrations
 ```bash
  python manage.py migrate
-
+```
 ###5.Create a Superuser (Optional)
 ```bash
 python manage.py createsuperuser
-
+```
 ###6. run the development server
 ```bash
 python manage.py runserver
+```
